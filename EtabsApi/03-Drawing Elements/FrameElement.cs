@@ -48,7 +48,7 @@ namespace EtabsApi
             frameSection = _frameSection;
             startPoint = new Point();
             endPoint = new Point();
-            startPoint.z = _xStart;
+            startPoint.x = _xStart;
             startPoint.y = _ystart;
             startPoint.z = _zStart;
             endPoint.x = _xEnd;
@@ -79,7 +79,8 @@ namespace EtabsApi
 
         }
 
-        public FrameElement(cSapModel _mySapModel, Point _startPoint, Point _endPoint, FrameSection _frameSection = null, string _userName = "", CSys _cSys = CSys.Global) : this(_mySapModel, _startPoint.x, _startPoint.y, _startPoint.z, _endPoint.x, _endPoint.y, _endPoint.z, _frameSection, _userName, _cSys)
+        public FrameElement(cSapModel _mySapModel, Point _startPoint, Point _endPoint, FrameSection _frameSection = null, string _userName = "", CSys _cSys = CSys.Global) : 
+            this(_mySapModel, _startPoint.x, _startPoint.y, _startPoint.z, _endPoint.x, _endPoint.y, _endPoint.z, _frameSection, _userName, _cSys)
         { }
         //Constructor for existing frame with section in ETABS (No creation for frame in etabs, just to set P,M2,M3,N)
         public FrameElement(cSapModel _mySapModel, string frameElementName, FrameSection _frameSection = null, string _userName = "") : base(_mySapModel, _userName)

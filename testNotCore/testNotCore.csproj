@@ -53,5 +53,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EtabsApi\EtabsApi.csproj">
+      <Project>{967ea2dd-e4a3-4aa3-b262-c58638b6a647}</Project>
+      <Name>EtabsApi</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
