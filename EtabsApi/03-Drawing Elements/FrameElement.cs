@@ -43,7 +43,9 @@ namespace EtabsApi
         string temp2 = "";
         string temp3 = "";
         string sectionName;
-        public FrameElement(cSapModel _mySapModel, double _xStart, double _ystart, double _zStart, double _xEnd, double _yEnd, double _zEnd, FrameSection _frameSection = null, string _userName = "", CSys _cSys = CSys.Global) : base(_mySapModel, _userName)
+        public FrameElement(cSapModel _mySapModel, double _xStart, double _ystart, double _zStart, double _xEnd, double _yEnd, 
+            double _zEnd, FrameSection _frameSection , string _name , string _userName="", CSys _cSys = CSys.Global) : 
+            base(_mySapModel, _name,_userName)
         {
             frameSection = _frameSection;
             startPoint = new Point();
@@ -55,6 +57,7 @@ namespace EtabsApi
             endPoint.y = _yEnd;
             endPoint.z = _zEnd;
             cSys = _cSys;
+    
 
             if (frameSection == null)
             {
@@ -65,12 +68,14 @@ namespace EtabsApi
                 sectionName = frameSection.name;
             }
 
-            temp1 = "";
+            temp1 = name;
             temp2 = "";
             temp3 = "";
 
-            mySapModel.FrameObj.AddByCoord(startPoint.x, startPoint.y, startPoint.z, endPoint.x, endPoint.y, endPoint.z, ref temp1, sectionName, userName, cSys.ToString());
+            int ret  = mySapModel.FrameObj.AddByCoord(startPoint.x, startPoint.y, startPoint.z, endPoint.x, endPoint.y, endPoint.z, 
+                ref temp1, sectionName, "",cSys.ToString());
             name = temp1;
+          
 
             // Set names of points
             mySapModel.FrameObj.GetPoints(name, ref temp2, ref temp3);
@@ -79,15 +84,11 @@ namespace EtabsApi
 
         }
 
-        public FrameElement(cSapModel _mySapModel, Point _startPoint, Point _endPoint, FrameSection _frameSection = null, string _userName = "", CSys _cSys = CSys.Global) : 
-            this(_mySapModel, _startPoint.x, _startPoint.y, _startPoint.z, _endPoint.x, _endPoint.y, _endPoint.z, _frameSection, _userName, _cSys)
+        public FrameElement(cSapModel _mySapModel, Point _startPoint, Point _endPoint, FrameSection _frameSection, string _name  ,CSys _cSys = CSys.Global, string _userName="" ) : 
+            this(_mySapModel, _startPoint.x, _startPoint.y, _startPoint.z, _endPoint.x, _endPoint.y, _endPoint.z, _frameSection, _name, _userName, _cSys)
         { }
         //Constructor for existing frame with section in ETABS (No creation for frame in etabs, just to set P,M2,M3,N)
-        public FrameElement(cSapModel _mySapModel, string frameElementName, FrameSection _frameSection = null, string _userName = "") : base(_mySapModel, _userName)
-        {
-            name = frameElementName;
-            frameSection = _frameSection;
-        }
+
 
         #region Methods
         public void RotateLocalAxes(double rotationAngel)
@@ -95,6 +96,11 @@ namespace EtabsApi
             mySapModel.FrameObj.SetLocalAxes(name, rotationAngel, eItemType.Objects);
         }
 
+        public override int elementModifire(ref double[] modifiresValues)
+        {
+            int ret = mySapModel.FrameObj.SetModifiers(name, ref modifiresValues);
+            return ret;
+        }
         #endregion
     }
 }

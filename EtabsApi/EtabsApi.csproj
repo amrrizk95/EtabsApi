@@ -58,6 +58,7 @@
     <Compile Include="02-Define Sections\Section.cs" />
     <Compile Include="02-Define Sections\SlabSection.cs" />
     <Compile Include="02-Define Sections\WallSection.cs" />
+    <Compile Include="03-Drawing Elements\Diaphragm.cs" />
     <Compile Include="03-Drawing Elements\Element.cs" />
     <Compile Include="03-Drawing Elements\FrameElement.cs" />
     <Compile Include="03-Drawing Elements\SlabElement.cs" />

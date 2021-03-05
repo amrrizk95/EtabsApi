@@ -15,7 +15,7 @@ namespace testNotCore
         {
             // open etabs  
             int ret = 0;
-           string ProgramPath = "C:\\Program Files\\Computers and Structures\\ETABS 17\\ETABS";
+        //   string ProgramPath = "C:\\Program Files\\Computers and Structures\\ETABS 17\\ETABS";
             //dimension the ETABS Object as cOAPI type
             ETABSv17.cHelper myHelper = new ETABSv17.Helper();
             ETABSv17.cOAPI myETABSObject = null;
@@ -36,6 +36,10 @@ namespace testNotCore
             var conMaterial = new ConcretMaterial(mySapModel, "tempAmrConcrete", 2.4028, 2534563.54, 0.2, 0.0000099);
             // define section
             var recSection = new RectSection(mySapModel, conMaterial, "tempAmrSection", .6, .9, 0);
+            // set modefires
+           double[] framModefires = new double[] {1,0.7,1,1,0.8,0.8,1 ,1};
+           double[] elementModefires = new double[] {0.7,0.7,0.7,0.7,0.7,0.7,0.7 ,0.7};
+            ret = recSection.setModefires(ref framModefires);
             // set  column points 
             var a0 = new Point(0, 0, 0);
             var a1 = new Point(0, 0, 3);
@@ -57,15 +61,20 @@ namespace testNotCore
 
 
             /// draw coloumns
-            var col1 = new FrameElement(mySapModel, a0, a1, recSection, "tempAmrUser", CSys.Global);
-            var col2 = new FrameElement(mySapModel, b0, b1, recSection, "tempAmrUser", CSys.Global);
-            var col3 = new FrameElement(mySapModel, c0, c1, recSection, "tempAmrUser", CSys.Global);
-            var col4 = new FrameElement(mySapModel, d0, d1, recSection, "tempAmrUser", CSys.Global);
+            var col1 = new FrameElement(mySapModel, a0, a1, recSection, "tempAmrCol1", CSys.Global);
+          ret=  col1.elementModifire(ref elementModefires);
+            var col2 = new FrameElement(mySapModel, b0, b1, recSection, "tempAmrCol2",  CSys.Global);
+          ret=  col2.elementModifire(ref elementModefires);
+            var col3 = new FrameElement(mySapModel, c0, c1, recSection, "tempAmrCol3",  CSys.Global);
+          ret=  col3.elementModifire(ref elementModefires);
+            var col4 = new FrameElement(mySapModel, d0, d1, recSection, "tempAmrCol4",  CSys.Global);
+         ret=   col4.elementModifire(ref elementModefires);
+
             // draw beams
-            var beam1 = new FrameElement(mySapModel, a1, b1, recSection, "tempAmrUser", CSys.Global);
-            var beam2 = new FrameElement(mySapModel, b1, c1, recSection, "tempAmrUser", CSys.Global);
-            var beam3 = new FrameElement(mySapModel, c1, d1, recSection, "tempAmrUser", CSys.Global);
-            var beam4 = new FrameElement(mySapModel, d1, a1, recSection, "tempAmrUser", CSys.Global);
+            var beam1 = new FrameElement(mySapModel, a1, b1, recSection, "tempAmrBeam1", CSys.Global);
+            var beam2 = new FrameElement(mySapModel, b1, c1, recSection, "tempAmrBeam2",  CSys.Global);
+            var beam3 = new FrameElement(mySapModel, c1, d1, recSection, "tempAmrBeam3",  CSys.Global);
+            var beam4 = new FrameElement(mySapModel, d1, a1, recSection, "tempAmrBeam4",  CSys.Global);
             // set slab points 
             var slabPoints = new List<Point>() {
                 a1,
@@ -74,9 +83,15 @@ namespace testNotCore
                 d1
                 };
             // set slab section
-            var slabSection = new SlabSection(mySapModel, "tempAmrSlabSection", eSlabType.Slab, eShellType.ShellThin, conMaterial, .20);
-            var slab = new SlabElement(mySapModel, "tempAmrSlab", slabPoints, slabSection);
+            var slabSection = new SlabSection(mySapModel, "tempAmrSlabSection", eSlabType.Slab, eShellType.ShellThin, 
+                conMaterial, .20);
+            // set slab modefires 
+            double[] slabModefires = new double[] { 1, 0.7, 1, 1, 0.9, 0.9, 1, 1 ,.5,.5};
+            double[] elmentModefires = new double[] { 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 1 ,.5,.5};
 
+            ret = slabSection.setModefires(ref slabModefires);
+            var slab = new SlabElement(mySapModel, "tempAmrSlab", slabPoints, slabSection);
+            slab.elementModifire(ref elmentModefires);
             // draw wall 
 
             // define section for wall

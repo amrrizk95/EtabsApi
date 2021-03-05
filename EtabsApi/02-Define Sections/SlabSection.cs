@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace EtabsApi
 {
-  public  class SlabSection:Section
+    public class SlabSection : Section
     {
         public double thinkness { get; set; }
         public MaterialProperties material { get; set; }
         public eSlabType slabType { get; set; }
         public eShellType shellType { get; set; }
 
-        public SlabSection(cSapModel _mySapModel,string name, 
+        public SlabSection(cSapModel _mySapModel,string _name, 
             eSlabType _slabType, eShellType _shellType, MaterialProperties _material, double _thinkness) 
-            :base(_mySapModel,name)
+            :base(_mySapModel,_name)
         {
-            this.name = name;
+            this.name = _name;
             this.thinkness = _thinkness;
             if (_material == null)
             {
@@ -33,7 +33,7 @@ namespace EtabsApi
             // set new area property
             int ret = _mySapModel.PropArea.SetSlab(name, slabType, shellType, material.name, thinkness);
         }
-        public int setModifiers(ref double[] modefireValus)
+        public override int   setModefires(ref double[] modefireValus)
         {
             int ret = MySapModel.PropArea.SetModifiers(name, ref modefireValus);
             return ret;

@@ -30,6 +30,11 @@ namespace EtabsApi
             shellType = _shellType;
             wallType = _wallType;
             int ret = _mySapModel.PropArea.SetWall(this.name, wallType, shellType, _material.name, thinkness);
+        } 
+        public override int setModefires(ref double[] modefireValus)
+        {
+            int ret = mySapModel.PropFrame.SetModifiers(name, ref modefireValus);
+            return ret;
         }
     }
 }

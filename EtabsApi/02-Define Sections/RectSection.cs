@@ -1,4 +1,4 @@
-﻿using ETABSv17;
+﻿ using ETABSv17;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,6 +22,10 @@ namespace EtabsApi
              int ret = MySapModel.PropFrame.SetRectangle(_name, material.name, height ,width,color,_notes,_guid);
         }
 
-
+        public override int setModefires(ref double[] modefireValus)
+        {
+            int ret = mySapModel.PropFrame.SetModifiers(name, ref modefireValus);
+            return ret;
+        }
     }
 }

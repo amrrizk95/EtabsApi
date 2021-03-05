@@ -23,7 +23,8 @@ namespace EtabsApi
             myStaticSapModel = _mySapModel;
         }
         #endregion
-
+        public abstract int setModefires(ref double[] modefireValus);
+   
 
     }
 }
