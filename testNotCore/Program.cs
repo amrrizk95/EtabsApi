@@ -1,10 +1,6 @@
 ﻿using EtabsApi;
 using ETABSv17;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace testNotCore
@@ -31,7 +27,29 @@ namespace testNotCore
             // intialize model 
             ret = mySapModel.InitializeNewModel(eUnits.Ton_m_C);
             ret = mySapModel.File.NewBlank();
-                
+
+            // we still miss seismic load
+            // add load patterns 
+         
+            var loadPatternOwnWeight = new LoadPattern(mySapModel, "OwnWeight", LoadPatternType.Dead, 1, true);
+            var loadPatternSD = new LoadPattern(mySapModel, "SD", LoadPatternType.SuperDead, 0, true);
+            var loadPatternWind = new LoadPattern(mySapModel, "Wind", LoadPatternType.Wind, 0, true);
+            var loadPatternLive = new LoadPattern(mySapModel, "Live", LoadPatternType.Live, 0, true);
+            var loadPatternLiveRoof = new LoadPattern(mySapModel, "LifeRoof", LoadPatternType.RoofLive, 0, true);
+
+
+
+
+
+
+            //  add load compination
+            var UDWal1 = new LoadCombination(mySapModel, "UDWal1",LoadCombinationType.LinearAdditive);
+            UDWal1.AddLoadCases(new List<LoadPattern>() { loadPatternOwnWeight, loadPatternSD }, new List<double>() { 1.4, 1.4 });
+            UDWal1.ModifyLoadCase("SD", 1.2);
+            var UDWal2 = new LoadCombination(mySapModel, "UDWal1",LoadCombinationType.LinearAdditive);
+            UDWal2.AddLoadCases(new List<LoadPattern>() { loadPatternOwnWeight, loadPatternLive, loadPatternSD }, new List<double>() { 1.2, 1.6,1.2 });
+
+
             // define concrete  material
             var conMaterial = new ConcretMaterial(mySapModel, "tempAmrConcrete", 2.4028, 2534563.54, 0.2, 0.0000099);
             // define section
@@ -88,14 +106,21 @@ namespace testNotCore
             // set slab modefires 
             double[] slabModefires = new double[] { 1, 0.7, 1, 1, 0.9, 0.9, 1, 1 ,.5,.5};
             double[] elmentModefires = new double[] { 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 1 ,.5,.5};
-
+                
             ret = slabSection.setModefires(ref slabModefires);
             var slab = new SlabElement(mySapModel, "tempAmrSlab", slabPoints, slabSection);
             slab.elementModifire(ref elmentModefires);
+
+
+
+            //int temp = mySapModel.AreaObj.SetLoadUniform("1", "SD", -0.01, 2, true,"Local",eItemType.Objects);
+
+
+            int x= slab.setUniformLoad(loadPatternSD, -0.01, 2, true);
             // draw wall 
 
             // define section for wall
-            var wallSection = new WallSection(mySapModel, "tempAmrWallSection", eWallPropType.Specified, eShellType.ShellThin, conMaterial, .30);
+              var wallSection = new WallSection(mySapModel, "tempAmrWallSection", eWallPropType.Specified, eShellType.ShellThin, conMaterial, .30);
 
             // set wall points 
             var wallPoints = new List<Point>() {
@@ -105,6 +130,9 @@ namespace testNotCore
                 w3
                 };
             var wall = new SlabElement(mySapModel, "tempAmrWall", wallPoints, slabSection);
+
+
+
 
         }
     }

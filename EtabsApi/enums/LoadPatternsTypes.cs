@@ -45,5 +45,7 @@ namespace EtabsApi
         StreamFlow = 37,
         Impact = 38,
         Construction = 39,
+        Seismic=40,
+        SeismicDraft=41
     }
 }

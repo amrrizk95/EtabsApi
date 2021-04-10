@@ -28,4 +28,16 @@ namespace EtabsApi
         }
         #endregion
     }
+
+    public class LoadPatternSeismic : EtabsCore
+    {
+        public int MyProperty { get; set; }
+        public LoadPatternSeismic(cSapModel _mySapModel) :base(_mySapModel)
+        {
+         
+ 
+
+
+        }
+    }
 }

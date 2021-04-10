@@ -33,9 +33,9 @@ namespace EtabsApi
                 y[i] = _coordinats[i].y;
                 z[i] = _coordinats[i].z;
             }
-            temp1 = name;
-           int ret = _mySapModel.AreaObj.AddByCoord(_coordinats.Count, ref x, ref y, ref z,ref temp1, section.name);
-            name = temp1;
+            string temp = name;
+            int ret = _mySapModel.AreaObj.AddByCoord(_coordinats.Count, ref x, ref y, ref z,ref temp, section.name);
+            name = temp;
 
         }
 
@@ -48,6 +48,13 @@ namespace EtabsApi
         {
             int ret = MySapModel.AreaObj.SetDiaphragm(name, diaphragm.name);
 
+            return ret;
+        }
+
+        public int setUniformLoad(LoadPattern loadPattern,double value,int dir,bool replaced)
+         {
+            string CoorType = CSys.Local.ToString();
+            int ret = MySapModel.AreaObj.SetLoadUniform(name, loadPattern.name, value, dir, replaced, CoorType, eItemType.Objects);
             return ret;
         }
     } 

@@ -20,30 +20,26 @@ namespace EtabsApi
             scalFactors = new List<double>();
             mySapModel.RespCombo.Add(name, (int)type);
         }
-        public void AddLoadCases(List<LoadPattern> _loadPatterns, List<double> _loadPatternsFactors)
-        {
-            for (int i = 0; i < _loadPatterns.Count; i++)
-            {
-                if (loadCases.Contains(_loadPatterns[i]))
-                {
-                    for (int j = 0; j < loadCases.Count; j++)
-                    {
-                        if (loadCases[j].name == _loadPatterns[i].name)
-                        {
-                            scalFactors[j] = _loadPatternsFactors[i];
-                        }
-                    }
-                }
-                else
-                {
-                    loadCases.Add(_loadPatterns[i]);
-                    scalFactors.Add(_loadPatternsFactors[i]);
-                }
-                eCNameType lC = eCNameType.LoadCase;
-                mySapModel.RespCombo.SetCaseList(name, ref lC, _loadPatterns[i].name, _loadPatternsFactors[i]);
-            }
 
+          
+        public int AddLoadCases(List<LoadPattern> _loadCases, List<double> _loadCasesFactors)
+        {
+            int result = 0;
+            for (int i = 0; i < _loadCases.Count; i++)
+            {
+                eCNameType lC = eCNameType.LoadCase;
+                int ret = mySapModel.RespCombo.SetCaseList(name, ref lC, _loadCases[i].name, _loadCasesFactors[i]);
+                result = ret;
+            }
+            return result;
         }
+        public int ModifyLoadCase(string name,double SF) 
+        {
+            eCNameType lC = eCNameType.LoadCase;
+            int ret = MySapModel.RespCombo.SetCaseList(this.name, ref lC, name, SF);
+            return ret;
+        }
+
 
     }
 }
