@@ -24,6 +24,8 @@ namespace EtabsApi
             isLoadCase = _isLoadCase;
             eLoadPatternType sapType = (eLoadPatternType)((int)type);
             mySapModel.LoadPatterns.Add(name, sapType, selfWeightMultiplier, isLoadCase);
+       
+
 
         }
         #endregion

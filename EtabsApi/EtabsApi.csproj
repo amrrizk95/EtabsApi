@@ -70,7 +70,10 @@
     <Compile Include="enums\CSys.cs" />
     <Compile Include="enums\LoadCombinationType.cs" />
     <Compile Include="enums\LoadPatternsTypes.cs" />
+    <Compile Include="enums\MassSourceOptions.cs" />
     <Compile Include="Grid\Grid.cs" />
+    <Content Include="Model1.txt" />
+    <Compile Include="Lateral_Loads\MassSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
