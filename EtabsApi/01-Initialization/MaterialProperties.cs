@@ -25,6 +25,7 @@ namespace EtabsApi
             U = _U;
             A = _A;
             density = _density;
+            var ret = mySapModel.PropMaterial.SetMaterial(name, type);
         }
         public MaterialProperties(cSapModel _mySapModel, eMatType _type):base(_mySapModel)
         {

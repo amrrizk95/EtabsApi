@@ -1,4 +1,4 @@
-﻿
+﻿        
 using ETABSv17;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace EtabsApi
             loadCombination = _loadCombination;
             mySapModel.Results.Setup.DeselectAllCasesAndCombosForOutput();
             mySapModel.Results.Setup.SetComboSelectedForOutput(loadCombination.name, true);
-        }
+        } 
 
     }
 }

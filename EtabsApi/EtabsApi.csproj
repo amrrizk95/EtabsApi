@@ -67,6 +67,7 @@
     <Compile Include="06-AssignLoad\AssignLoadOnPoint.cs" />
     <Compile Include="07-AnalysisResults\AnalysisResult.cs" />
     <Compile Include="07-AnalysisResults\FrameAnalysisResult.cs" />
+    <Compile Include="07-AnalysisResults\StoryDrift.cs" />
     <Compile Include="enums\CSys.cs" />
     <Compile Include="enums\LoadCombinationType.cs" />
     <Compile Include="enums\LoadPatternsTypes.cs" />
